@@ -96,7 +96,7 @@ class ViewController: UIViewController {
 //    }
     
     func processGameResults(playerChoice: String){
-    print( "Player: " + playerChoice)
+//    print( "Player: " + playerChoice)
     if(firstPlay == 0){
     cpuChoice =   cpuChoose()
     }
@@ -126,9 +126,9 @@ class ViewController: UIViewController {
     
     
     @IBAction func resetButton(_ sender: UIButton) {
-//        score = 0
-//        scoreView.text = "Score " + String(score)
-        getCPUImage()
+        score = 0
+        scoreView.text = "Score " + String(score)
+//        getCPUImage()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
