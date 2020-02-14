@@ -11,7 +11,8 @@ import UIKit
 var score: Int = 0
 var cpuChoice: String = ""
 var playerChoice: String = ""
-
+var firstPlay: Int = 0
+var cpuMainChoice: String = ""
 
 class ViewController: UIViewController {
     
@@ -19,16 +20,30 @@ class ViewController: UIViewController {
     @IBOutlet weak var winLoseView: UILabel!
     @IBOutlet weak var cpuView: UIImageView!
     @IBOutlet weak var resetButton: UIButton!
+    @IBOutlet weak var playerFirst: UISwitch!
     
     let imageNames = ["rock", "scissors", "paper"]
     
+    @IBAction func cpuFirst(_ sender: Any) {
+        
+        if (firstPlay == 1) {
+            firstPlay = 0
+            cpuChoice =   cpuChoose()
+        }else{
+            firstPlay = 1
+            cpuChoice =   cpuChoose()
+        }
+        
+    }
+    
+    
     func cpuChoose() -> String {
         let randomImageName = imageNames.randomElement()
+        
         if let imageName = randomImageName
         {
-            cpuView.image = UIImage(named: imageName)
-            
-            print( "CPU: " + imageName)
+            cpuMainChoice = imageName
+//            cpuView.image = UIImage(named: imageName)
             return imageName
         }
         return ""
@@ -74,53 +89,55 @@ class ViewController: UIViewController {
             return "CHEATER!!!"
         }
         
-        
-        //
-        //        if(cpuChoice == playerChoice){
-        //            score += 0
-        //            return "Tie"
-        //        }else if(playerChoice == "rock" && cpuChoice == "scissors"){
-        //        score += 1
-        //        return "Win"
-        //        }
-        //        return "Cheater!"
     }
     
+//    @IBAction func cpuButton(_ sender: UIButton) {
+//        winLoseView.text = "test"
+//    }
+    
+    func processGameResults(playerChoice: String){
+    print( "Player: " + playerChoice)
+    if(firstPlay == 0){
+    cpuChoice =   cpuChoose()
+    }
+    getCPUImage()
+    winLoseView.text =   roundResult(cpuChoice:cpuChoice, playerChoice:playerChoice)
+    if(firstPlay == 1){
+    cpuChoice =   cpuChoose()
+    }
+    }
     
     @IBAction func rockButton(_ sender: UIButton) {
         playerChoice = "rock"
-        print( "Player: " + playerChoice)
-        cpuChoice =   cpuChoose()
-        winLoseView.text =   roundResult(cpuChoice:cpuChoice, playerChoice:playerChoice)
+        processGameResults(playerChoice:playerChoice)
     }
     
     @IBAction func paperButton(_ sender: UIButton) {
         playerChoice = "paper"
-        print( "Player: " + playerChoice)
-        cpuChoice =   cpuChoose()
-        winLoseView.text =   roundResult(cpuChoice:cpuChoice, playerChoice:playerChoice)
-    }
+        processGameResults(playerChoice:playerChoice)
+        }
     
     @IBAction func scisscorsButton(_ sender: UIButton) {
         playerChoice = "scissors"
-        print( "Player: " + playerChoice)
-        cpuChoice =   cpuChoose()
-        winLoseView.text =   roundResult(cpuChoice:cpuChoice, playerChoice:playerChoice)
-    }
+        processGameResults(playerChoice:playerChoice)
+        }
     
     
     
     
     @IBAction func resetButton(_ sender: UIButton) {
-        score = 0
-        scoreView.text = "Score " + String(score)
-        
+//        score = 0
+//        scoreView.text = "Score " + String(score)
+        getCPUImage()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
     
+    func getCPUImage(){
+        cpuView.image = UIImage(named: cpuMainChoice)
+    }
     
 }
 
